@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from movie_app.api.view import movie
-from movie_app.api.db import database, engine, metadata
+from app.api.view import movie
+from app.api.db import database, engine, metadata
 
 metadata.create_all(engine)
 
