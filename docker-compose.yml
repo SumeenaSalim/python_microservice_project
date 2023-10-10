@@ -9,7 +9,7 @@ services:
     ports:
       - 8001:8000
     environment:
-      - DATABASE_URL=postgresql://movie_user:movie_password@localhost/pgmovie_db
+      - DATABASE_URL=postgresql://movie_user:movie_password@movie_db:5432/pgmovie_db
     depends_on:
       - movie_db
   
