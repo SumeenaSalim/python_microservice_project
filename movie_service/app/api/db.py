@@ -6,7 +6,7 @@ from sqlalchemy import (
     create_engine,
     ARRAY,
     String,
-    Integer
+    Integer,
 )
 from databases import Database
 
