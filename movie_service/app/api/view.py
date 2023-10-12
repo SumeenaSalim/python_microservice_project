@@ -9,7 +9,11 @@ movie = APIRouter()
 
 @movie.get('/', response_model=List[MovieOut])
 async def get_movie():
-    return await get_movies()
+    try:
+        resp = await get_movies()
+    except Exception:
+        raise HTTPException(status_code=404, detail="Connection failed")
+    return resp
 
 
 @movie.post('/', status_code=201)
