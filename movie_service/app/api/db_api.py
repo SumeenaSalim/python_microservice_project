@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from app.api.models import MovieOut, MovieIn, MovieUpdate
+from app.api.models import MovieIn
 from app.api.db import database, movies
 
 

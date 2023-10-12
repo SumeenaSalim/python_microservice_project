@@ -15,4 +15,4 @@ async def startup():
 async def shutdown():
     await database.disconnect()
 
-app.include_router(movie)
+app.include_router(movie, prefix="/movie", tags=["movies"])
