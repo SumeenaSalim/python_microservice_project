@@ -3,13 +3,13 @@ version: '3.7'
 services:
   movie_service:
     build: ./movie_service
-    container_name: fastapi
+    container_name: movie_service
     restart: always
-    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ./movie_service/:/app/
     ports:
-      - 8000:80
+      - 8001:8000
     environment:
       - DATABASE_URL=postgresql://movie_user:movie_password@movie_db:5432/pgmovie_db
     depends_on:
@@ -17,7 +17,7 @@ services:
   
   movie_db:
     image: postgres:12.1-alpine
-    container_name: postgres
+    container_name: movie_postgres
     restart: always
     volumes:
       - ./postgres_data_movie:/var/lib/postgresql/data/
@@ -27,3 +27,34 @@ services:
       - POSTGRES_USER=movie_user
       - POSTGRES_PASSWORD=movie_password
       - POSTGRES_DB=pgmovie_db
+
+  cast_service:
+    build: ./cast_service
+    container_name: cast_service
+    restart: always
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./cast_service/:/app/
+    ports:
+      - 8002:8000
+    environment:
+      - DATABASE_URL=postgresql://cast_user:cast_password@cast_db:5432/pgcast_db
+    depends_on:
+      - cast_db
+  
+  cast_db:
+    image: postgres:12.1-alpine
+    container_name: cast_postgres
+    restart: always
+    volumes:
+      - ./postgres_data_cast:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=cast_user
+      - POSTGRES_PASSWORD=cast_password
+      - POSTGRES_DB=pgcast_db
+
+volumes:
+  postgres_data_movie:
+  postgres_data_cast:
