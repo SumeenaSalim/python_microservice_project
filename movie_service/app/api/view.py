@@ -5,6 +5,7 @@ from app.api.models import MovieOut, MovieIn
 from app.api.db_api import get_all_movies, fetch_movie, add_movie, edit_movie, delete_movie
 from app.api.service import is_cast_present
 
+
 movie = APIRouter()
 
 
@@ -13,7 +14,6 @@ async def get_movies():
     resp = await get_all_movies()
     if not resp:
         raise HTTPException(status_code=404, detail="Connection failed")
-  
     return {
         "message": "success",
         "data": resp
@@ -82,6 +82,7 @@ async def remove_movie(id: int):
     found = await fetch_movie(id)
     if not found:
         raise HTTPException(status_code=404, detail=f"Movie with given id {id} does not exist")
+
     await delete_movie(id)
     return {
         "message": "success",
@@ -90,3 +91,4 @@ async def remove_movie(id: int):
             "deleted": True
         }
     }
+
