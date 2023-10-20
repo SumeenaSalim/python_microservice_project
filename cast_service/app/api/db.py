@@ -8,7 +8,6 @@ from sqlalchemy import (
     Column,
     Table
 )
-from pydantic import EmailStr
 from typing import List
 from databases import Database
 
@@ -22,9 +21,8 @@ casts = Table(
     "casts",
     metadata,
     Column('id', Integer, primary_key=True),
-    Column('name', String(50), nullable=False),
+    Column('name', String(50)),
     Column('country', String(50)),
-    Column('email', String(100), unique=True, nullable=False)
 )
 
 database = Database(DATABASE_URl)

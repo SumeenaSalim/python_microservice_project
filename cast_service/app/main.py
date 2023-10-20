@@ -5,7 +5,7 @@ from app.api.view import casts
 
 metadata.create_all(engine)
 
-app = FastAPI()
+app = FastAPI(openapi_url="/casts/openapi.json", docs_url="/casts/docs")
 
 @app.on_event("startup")
 async def startup():

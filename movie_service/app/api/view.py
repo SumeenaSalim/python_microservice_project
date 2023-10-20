@@ -13,11 +13,8 @@ movie = APIRouter()
 async def get_movies():
     resp = await get_all_movies()
     if not resp:
-        raise HTTPException(status_code=404, detail="Connection failed")
-    return {
-        "message": "success",
-        "data": resp
-    }
+        raise HTTPException(status_code=404, detail="No movies found")
+    return resp
 
 
 @movie.get('/{id}', response_model=MovieOut)
@@ -35,7 +32,8 @@ async def get_movie_by_id(id: int):
 @movie.post('/', status_code=201)
 async def create_movie(payload: MovieIn):
     for c_id in payload.casts_id:
-        if not is_cast_present(c_id):
+        casts = is_cast_present(c_id)
+        if not casts:
             raise HTTPException(status_code=404, detail=f"Cast with id:{c_id} does not exist")
 
     movie_id = await add_movie(payload)
@@ -46,7 +44,7 @@ async def create_movie(payload: MovieIn):
             "title": payload.title,
             "description": payload.description,
             "type": payload.type,
-            "casts": payload.casts,
+            "cast_id": payload.casts_id,
             "year": payload.year,
         }        
     }
@@ -60,7 +58,8 @@ async def update_movie(id: int, payload: MovieIn):
     
     if 'casts_id' in payload:
         for c_id in payload.casts_id:
-            if not is_cast_present(c_id):
+            casts = is_cast_present(c_id)
+            if not casts:
                 raise HTTPException(status_code=404, detail=f"Cast with given id:{c_id} does not exist")
 
     movie_id = await edit_movie(id, payload)
@@ -71,7 +70,7 @@ async def update_movie(id: int, payload: MovieIn):
             "title": payload.title,
             "description": payload.description,
             "type": payload.type,
-            "casts": payload.casts,
+            "cast_id": payload.casts_id,
             "year": payload.year,
         }        
     }    
