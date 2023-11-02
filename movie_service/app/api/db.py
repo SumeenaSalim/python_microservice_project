@@ -23,7 +23,7 @@ movies = Table(
     Column('title', String(50)),
     Column('description', String(250)),
     Column('type', ARRAY(String)),
-    Column('casts_id', ARRAY(Integer)),
+    Column('casts_id', ARRAY(String)),
     Column('year', Integer)
 )
 
