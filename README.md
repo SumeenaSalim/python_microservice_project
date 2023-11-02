@@ -17,4 +17,5 @@ Python is a perfect tool for building micro-services. So this is a simple movie 
 ```
 docker-compose up -d
 ```
-* Go to the APIs http://localhost:8000/movie for movie service and http://localhost:8000/cast for cast service.
+* Go to the APIs http://localhost:8080/movie for movie service and http://localhost:8080/cast for cast service.
+* For the documentation of Movie Service:- http://localhost:8080/movie/docs and Cast-Service:- http://localhost:8080/casts/docs
