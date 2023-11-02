@@ -20,13 +20,9 @@ async def get_movies():
 @movie.get('/{id}', response_model=MovieOut)
 async def get_movie_by_id(id: int):
     movie = await fetch_movie(id)
-    print("\n\n\n", movie)
     if not movie:
         raise HTTPException(status_code=404, detail=f"Movie with given id {id} not found")
-    return {
-        "message": "success",
-        "data": movie
-    }
+    return movie
 
 
 @movie.post('/', status_code=201)
